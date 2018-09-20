@@ -1,0 +1,309 @@
+White Wine Exploration by Tianxing Zhai
+========================================================
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+# Load all of the packages that you end up using
+# in your analysis in this code chunk.
+
+# Notice that the parameter "echo" was set to FALSE for this code chunk.
+# This prevents the code from displaying in the knitted HTML output.
+# You should set echo=FALSE for all code chunks in your file.
+
+library(ggplot2)
+library(dplyr)
+library(GGally)
+library(tibble)
+library(tidyr)
+library(memisc)
+library(Hmisc)
+library(gridExtra)
+Sys.setenv(LANG = "en")
+```
+
+```{r echo=FALSE, Load_the_Data}
+# Load the Data
+df = read.csv('wineQualityWhites.csv')
+df$quality = ordered(df$quality, levels = c(3,4,5,6,7,8,9))
+```
+
+
+# Univariate Analysis
+
+### What is the structure of your dataset?
+```{r echo=FALSE}
+str(df)
+summary(df)
+```
+There are 4898 observations (whitewines) in the dataset with 13 variables as listed above. 
+The 'x' variable is id of whitewines. The 'quality' variable is the quality of whitewines, which scores between 0 (worst) and 10 (best). All other variables are continuous variables which stand for chemical concentration or chemical features of whitewines (I will call these variables 'chemical variables').
+
+### What is/are the main feature(s) of interest in your dataset?
+```{r echo=FALSE}
+ggplot(aes(x = quality), data = df) +
+  geom_bar()
+```
+
+The main feature in the data set is quality. All other variables (except 'x', the id) are measured for finding relation with quality. As we can see, most whitewines score 6 and fewest whitewines have scores of 3-4 (worst) and 8-9 (best).
+
+### What other features in the dataset do you think will help support your investigation into your feature(s) of interest?
+All chemical variables are potential predict factors of quality. I will put most efforts on Bivariate Analysis.
+
+
+# Bivariate Plots Section
+```{r echo=FALSE, Bivariate_Plots}
+df$quality = ordered(df$quality, levels = c(3,4,5,6,7,8,9))
+ggpairs(df[2:13], 
+        lower = list(continuous = wrap("points", shape = I('.'))), 
+        upper = list(combo = wrap("box", outlier.shape = I('.'))))
+```
+
+Above is the pair plots of all variables except X. It is hard to find correlation in the plot. We need to run correlation tests and find which variables have corelation with quality:
+
+```{r echo = FALSE}
+cor_table = rcorr(as.matrix(df[2:13]),type="pearson")
+cor_r = as.data.frame(cor_table[['r']])
+cor_p = as.data.frame(cor_table[['P']])
+cor_rp_table = rbind(cor_r[12,1:11], cor_p[12,1:11])
+cor_rp_table = rownames_to_column(cor_rp_table, var = 'type')
+cor_rp_table$type = c('R', 'P')
+cor_rp_table = gather(cor_rp_table, -'type', key = 'chemicals', value = 'values')
+cor_rp_table = spread(cor_rp_table, type, values)
+cor_rp_table
+```
+```{r echo = FALSE}
+subset(cor_rp_table, P > 0.05)
+```
+
+'free.sulfur.dioxide' and 'citric.acid' do not have significant correlation (p > 0.05) with quality. Let's make boxplots to see detailly: (the red line in boxplots represent the change of median, similarly hereinafter)
+```{r echo = FALSE}
+ggplot(aes(x = quality, y = free.sulfur.dioxide), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0, 100))
+
+ggplot(aes(x = quality, y = citric.acid), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0, 1))
+```
+
+There no obvious patterns above. So I will exclude them from potential predict factors.
+
+Among remaining 9 variables, 3 of them positively correlated with quality and 6 negatively correlated with quality.
+```{r echo = FALSE}
+subset(cor_rp_table, (P <= 0.05) & (R > 0))
+```
+'Alcohol', 'pH' and 'sulphates' positively correlated with quality. Similarly, I made boxplots to see detailly.
+```{r echo = FALSE}
+ggplot(aes(x = quality, y = alcohol), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) 
+
+ggplot(aes(x = quality, y = pH), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) 
+
+ggplot(aes(x = quality, y = sulphates), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0.2, 0.6)) 
+```
+
+We can see apparent increase of median alcohol content from that of quality 5 to quality 9. So alcohol may be a strong predictor of quality. The increase of median pH from quality 4 to quality 9 is mild, but at least it is monotonous. As to sulphates concentration, there are neither obvious difference between quality groups, nor monotonous increase or decrease trends. Considering the R(0.05367788) is too small, I will exclude sulphates concentration from predict factors. 
+
+Here are potential negative predictors and their boxplots:
+```{r echo = FALSE}
+subset(cor_rp_table, (P <= 0.05) & (R < 0))
+```
+
+```{r echo = FALSE}
+ggplot(aes(x = quality, y = chlorides), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0, 0.1)) 
+
+ggplot(aes(x = quality, y = density), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0.99, 1.0))
+
+ggplot(aes(x = quality, y = fixed.acidity), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(5, 9))
+
+ggplot(aes(x = quality, y = residual.sugar), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0, 20))
+
+ggplot(aes(x = quality, y = total.sulfur.dioxide), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0, 250))
+
+ggplot(aes(x = quality, y = volatile.acidity), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0, 0.6))
+```
+
+Using the same criteria as above, we can conclude that:
+Density may be strong predict factors.
+Chlorides and residual sugar may be weak predict factors. 
+Fixed acidity, total sulfur dioxide and volatile acidity may not be predict factors.
+
+# Bivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
+The alcohol content and density may be strong predict factors for quality. Whitewines with higher alcohol content and lower density may have better quality.
+Chlorides, residual sugar and pH may be weak predict factors for quality.
+
+
+### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
+```{r echo = FALSE}
+ggplot(aes(x = density, y = alcohol), data = df) +
+  geom_point() +
+  xlim(quantile(df$density, 0.01), quantile(df$density, 0.99))
+
+ggplot(aes(x = density, y = residual.sugar), data = df) +
+  geom_point() +
+  xlim(quantile(df$density, 0.01), quantile(df$density, 0.99))+
+  ylim(0,25)
+```
+
+Density has strong positive corelation with residual sugar. The effect of density on quality may be confounded by alcohol or residual sugar.
+
+```{r echo = FALSE}
+ggplot(aes(x = pH, y = fixed.acidity), data = df) +
+  geom_point() 
+
+ggplot(aes(x = pH, y = volatile.acidity), data = df) +
+  geom_point() 
+
+ggplot(aes(x = pH, y = citric.acid), data = df) +
+  geom_point() 
+```
+
+Among all three acids: fixed acidity(tartaric acid), volatile acidity(acetic acid) and citric acid, tartaric acid has strongest effect on pH.
+
+### What was the strongest relationship you found?
+The relationship between density and residual sugar/ alcohol.
+
+
+
+# Multivariate Plots Section
+
+```{r echo=FALSE, Multivariate_Plots}
+ggplot(aes(x = density, y = alcohol, color = quality), data = df) +
+  geom_point() +
+  scale_color_brewer(type = 'qual') +
+  xlim(quantile(df$density, 0.01), quantile(df$density, 0.99)) 
+
+
+ggplot(aes(x = density, y = residual.sugar, color = quality), data = df) +
+  geom_point() +
+  scale_color_brewer(type = 'qual') +
+  xlim(quantile(df$density, 0.01), quantile(df$density, 0.99))+
+  ylim(0,25)
+
+ggplot(aes(x = alcohol, y = residual.sugar, color = quality), data = df) +
+  geom_point() +
+  scale_color_brewer(type = 'qual') +
+  ylim(0,25) +
+  geom_hline(aes(yintercept = 5), color = 'red') +
+  geom_vline(aes(xintercept = 11), color = 'blue') +
+  annotate(geom = "text", x = 8, y = 3.5, label = "A") +
+  annotate(geom = "text", x = 14, y = 3.5, label = "B")
+```
+
+In the first figure, dots with dark colors(quality 7 and 8) gather in the top left corner.  In the second figure, similar pattern is observed as well: dots with dark colors(quality 7 and 8) gather in the bottom left corner. These mean that whitwines with more alcohol, less sugar and lower density tend to have better quality.
+
+I also notice that density mianly depends on the alcohol and sugar content. More alchol and less sugar, lower the density will be. This implies that the effect of density on the prediction of quality is confounded by alcohol and sugar. The effect strength of alcohol is greater than that of sugar because: In figure 3, keep the sugar content in a low interval (< 5). When alcohol level is low, there are few dark dots in that area (A area). However, when alcohol level is high, there are many dark dots in that area (B area).
+
+```{r echo = FALSE}
+ggplot(aes(x = pH, y = fixed.acidity, color = quality), data = df) +
+  geom_point() +
+  scale_color_brewer(type = 'qual') +
+  ylim(4,10)
+```
+
+The pattern here is much more unconspicuous. But we can still recognize that dark dots tend to center in the right. Besides, we can notice that fixed acid do not have effect on the quality, because the dark dots center in the right, not the right top or bottom corners.
+
+
+# Multivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the investigation. Were there features that strengthened each other in terms of looking at your feature(s) of interest?
+
+The quality of whitewines is mainly affected by alchol, sugar content and density. But the effect of density on quality is confounded by alcohol and sugar. The confounding strength of alcohol is greater than that of sugar.
+
+### OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.
+Yes. I make a simple linear regression model to predict qulity. But strictly speaking, 'quality' is not a continous variable. So it is not so good to use linear regression model. The R-square is 0.220, too low for a eligible linear regression model.
+
+```{r echo = FALSE}
+df_quality.as.numeric = transform(df, quality = as.numeric(quality))
+m1 <- lm(quality ~ alcohol, data = df_quality.as.numeric)
+m2 <- update(m1, ~ . + density)
+m3 <- update(m2, ~ . + pH)
+m4 <- update(m3, ~ . + chlorides)
+m5 <- update(m4, ~ . + residual.sugar)
+mtable(m1, m2, m3, m4, m5)
+```
+
+------
+
+# Final Plots and Summary
+
+### Plot One
+```{r echo=FALSE, Plot_One}
+ggplot(aes(x = quality), data = df) +
+  geom_bar() +
+  ggtitle('The distribution of quality')
+```
+
+### Description One
+Most whitewines have middle level quality(6). Fewer of them have quality 5 and 7, which are worse and better than quality 6, respectively. Fewest wines have quality 3,4 and 8,9, which mean the worst and best, respectively.
+
+### Plot Two
+```{r echo=FALSE, Plot_Two}
+p1 = ggplot(aes(x = quality, y = alcohol), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  ggtitle('Boxplots of alcohol and density by quality') +
+  ylab('alcohol(% by volume)')
+
+p2 = ggplot(aes(x = quality, y = density), data = df) +
+  geom_boxplot() +
+  geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
+  coord_cartesian(ylim = c(0.99, 1.0)) +
+  ylab('density(g/cm^3)')
+  
+
+grid.arrange(p1, p2, ncol = 1)
+```
+
+### Description Two
+Among all 11 chemical variables, alcohol and density are the strongest influence factors of quality. Better wines have higher alcohol content and lower density. Although there is a slight decline of median alcohol content from quality 3 to quality 5, the increase from quality 5 to 9 is much more obvious. The trend is similar for median density: The median starts decreasing from quality 5 to 9, and the trend is also apparent.
+
+### Plot Three
+```{r echo=FALSE, Plot_Three}
+ggplot(aes(x = alcohol, y = density, color = quality), data = df) +
+  geom_point() +
+  scale_color_brewer(type = 'qual') +
+  ylim(quantile(df$density, 0.01), quantile(df$density, 0.99)) +
+  ggtitle('Density by alcohol content and quality') +
+  xlab('alcohol(% by volume)') +
+  ylab('density(g/cm^3)')
+```
+
+### Description Three
+Alcohol and density are the strongest influence factors of quality. But the only one which actually affects quality is alcohol, not density. Density has a strong linear relation between alcohol content: more alcohol, lower density. The logic chain is: Whitewines with high alcohol content tend to have better quality and lower density. So seemingly, density 'affects' the quality. 
+
+------
+
+# Reflection
+This data set contains information on 4898 whitewines across 13 variables. I started by understanding the chemical variable and quality in the data set, and then I explored interesting questions and leads as I continued to make observations on plots. Eventually, I explored the quality of whitewines across many chemical variables and created a linear model to predict quality.
+
+There was a clear trend between the alcohol and density of a wine and its quality. I was very surprised that other chemical factors like acidity and sulfur dioxide content did not have a strong correlation with quality. I also found that alcohol and density have strong linear relation. This remiands there may be confounding: Whitewines with high alcohol content tend to have better quality and lower density. So seemingly, density 'affects' the quality. Although the true effector is not density, I still suggest that measuring density can be a rule of thumb for predicting wine quality. Because density have an almost perfect linear relation with the true effector, alcohol. And it is much easier to measure density than alcohol content. 
+
+The limitations of my analysis are: 1. I did not quantify the effect of confounding. 2. I treat quality as categorical data, so it is not appropriate to do linear regression on it. And we can see that the final R-square of my model is very low (0.220). Maybe in the future work, after I learn more on statistics, I will try to sovle these two problems.
