@@ -34,45 +34,104 @@ df$quality = ordered(df$quality, levels = c(3,4,5,6,7,8,9))
 ```{r}
 str(df)
 summary(df)
-names(df)
-ggplot(aes(x = quality), data = df) +
-  geom_bar()
-
-ggplot(aes(x = fixed.acidity), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = volatile.acidity), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = citric.acid), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = residual.sugar), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = chlorides), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = free.sulfur.dioxide), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = total.sulfur.dioxide), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = density), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = pH), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = sulphates), data = df) +
-  geom_histogram()
-
-ggplot(aes(x = alcohol), data = df) +
-  geom_histogram()
 ```
 
-The distributions of all chemical variables, except alcohol, are bell-shape with positive skew. So it it better to analyse their medians rather than means. 
+There are 4898 observations (whitewines) in the dataset with 13 variables as listed above. The 'x' variable is id of whitewines. The 'quality' variable is the quality of whitewines, which scores between 0 (worst) and 10 (best). All other variables are continuous variables which stand for chemical concentration or chemical features of whitewines (I will call these variables 'chemical variables').
+
+```{r}
+ggplot(aes(x = quality), data = df) +
+  geom_bar()
+```
+
+The main feature in the data set is quality. All other variables (except 'x', the id) are measured for finding relation with quality. As we can see, most whitewines score 6 and fewest whitewines have scores of 3-4 (worst) and 8-9 (best).
+
+```{r}
+p1 = ggplot(aes(x = fixed.acidity), data = df) +
+  geom_density() 
+
+p2 = ggplot(aes(x = volatile.acidity), data = df) +
+  geom_density() 
+
+p3 = ggplot(aes(x = citric.acid), data = df) +
+  geom_density()
+
+p4 = ggplot(aes(x = residual.sugar), data = df) +
+  geom_density()
+
+p5 = ggplot(aes(x = chlorides), data = df) +
+  geom_density()
+
+p6 = ggplot(aes(x = free.sulfur.dioxide), data = df) +
+  geom_density()
+
+p7 = ggplot(aes(x = total.sulfur.dioxide), data = df) +
+  geom_density()
+
+p8 = ggplot(aes(x = density), data = df) +
+  geom_density()
+
+p9 = ggplot(aes(x = pH), data = df) +
+  geom_density()
+
+p10 = ggplot(aes(x = sulphates), data = df) +
+  geom_density()
+
+p11 = ggplot(aes(x = alcohol), data = df) +
+  geom_density() 
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, ncol = 3)
+```
+
+The distributions of all chemical variables, except alcohol, are bell-shape with positive skew. So it it better to analyse their medians rather than means. Then I use log tranformation to normalize:
+```{r}
+p1 = ggplot(aes(x = fixed.acidity), data = df) +
+  geom_density() +
+  scale_x_log10()
+
+p2 = ggplot(aes(x = volatile.acidity), data = df) +
+  geom_density() +
+  scale_x_log10()
+
+p3 = ggplot(aes(x = citric.acid), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p4 = ggplot(aes(x = residual.sugar), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p5 = ggplot(aes(x = chlorides), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p6 = ggplot(aes(x = free.sulfur.dioxide), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p7 = ggplot(aes(x = total.sulfur.dioxide), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p8 = ggplot(aes(x = density), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p9 = ggplot(aes(x = pH), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p10 = ggplot(aes(x = sulphates), data = df) +
+  geom_density()+
+  scale_x_log10()
+
+p11 = ggplot(aes(x = alcohol), data = df) +
+  geom_density() +
+  scale_x_log10()
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, ncol = 3)
+```
+
+That looks more normal.
 
 ### What is the structure of your dataset?
 
@@ -137,19 +196,21 @@ Among remaining 9 variables, 3 of them positively correlated with quality and 6 
 subset(cor_rp_table, (P <= 0.05) & (R > 0))
 ```
 'Alcohol', 'pH' and 'sulphates' positively correlated with quality. Similarly, I made boxplots to see detailly.
-```{r echo = FALSE}
-ggplot(aes(x = quality, y = alcohol), data = df) +
+```{r echo = FALSE, fig.width = 10, fig.height = 7}
+p1 = ggplot(aes(x = quality, y = alcohol), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) 
 
-ggplot(aes(x = quality, y = pH), data = df) +
+p2 = ggplot(aes(x = quality, y = pH), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) 
 
-ggplot(aes(x = quality, y = sulphates), data = df) +
+p3 = ggplot(aes(x = quality, y = sulphates), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
-  coord_cartesian(ylim = c(0.2, 0.6)) 
+  coord_cartesian(ylim = c(0.2, 0.6))
+
+grid.arrange(p1, p2, p3, ncol = 2)
 ```
 
 We can see apparent increase of median alcohol content from that of quality 5 to quality 9. So alcohol may be a strong predictor of quality. The increase of median pH from quality 4 to quality 9 is mild, but at least it is monotonous. As to sulphates concentration, there are neither obvious difference between quality groups, nor monotonous increase or decrease trends. Considering the R(0.05367788) is too small, I will exclude sulphates concentration from predict factors. 
@@ -159,36 +220,38 @@ Here are potential negative predictors and their boxplots:
 subset(cor_rp_table, (P <= 0.05) & (R < 0))
 ```
 
-```{r echo = FALSE}
-ggplot(aes(x = quality, y = chlorides), data = df) +
+```{r echo = FALSE, fig.width = 10, fig.height = 7}
+p1 = ggplot(aes(x = quality, y = chlorides), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
   coord_cartesian(ylim = c(0, 0.1)) 
 
-ggplot(aes(x = quality, y = density), data = df) +
+p2 = ggplot(aes(x = quality, y = density), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
   coord_cartesian(ylim = c(0.99, 1.0))
 
-ggplot(aes(x = quality, y = fixed.acidity), data = df) +
+p3 = ggplot(aes(x = quality, y = fixed.acidity), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
   coord_cartesian(ylim = c(5, 9))
 
-ggplot(aes(x = quality, y = residual.sugar), data = df) +
+p4 = ggplot(aes(x = quality, y = residual.sugar), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
   coord_cartesian(ylim = c(0, 20))
 
-ggplot(aes(x = quality, y = total.sulfur.dioxide), data = df) +
+p5 = ggplot(aes(x = quality, y = total.sulfur.dioxide), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
   coord_cartesian(ylim = c(0, 250))
 
-ggplot(aes(x = quality, y = volatile.acidity), data = df) +
+p6 = ggplot(aes(x = quality, y = volatile.acidity), data = df) +
   geom_boxplot() +
   geom_line(stat = 'summary', fun.y = median, group = 'quality', color = 'red', size = 1) +
   coord_cartesian(ylim = c(0, 0.6))
+
+grid.arrange(p1, p2, p3, p4, p5, p6, ncol = 2)
 ```
 
 Using the same criteria as above, we can conclude that:
@@ -198,26 +261,26 @@ Fixed acidity, total sulfur dioxide and volatile acidity may not be predict fact
 
 ```{r echo = FALSE}
 ggplot(aes(x = density, y = alcohol), data = df) +
-  geom_point() +
+  geom_point(position = 'jitter', alpha = 0.5) +
   xlim(quantile(df$density, 0.01), quantile(df$density, 0.99))
 
 ggplot(aes(x = density, y = residual.sugar), data = df) +
-  geom_point() +
+  geom_point(position = 'jitter', alpha = 0.25) +
   xlim(quantile(df$density, 0.01), quantile(df$density, 0.99))+
   ylim(0,25)
 ```
 
-Density has strong positive corelation with residual sugar. The effect of density on quality may be confounded by alcohol or residual sugar.
+Density has strong corelation with alcohol and residual sugar. The effect of density on quality may be confounded by alcohol or residual sugar.
 
 ```{r echo = FALSE}
 ggplot(aes(x = pH, y = fixed.acidity), data = df) +
-  geom_point() 
+  geom_point(position = 'jitter', alpha = 0.25) 
 
 ggplot(aes(x = pH, y = volatile.acidity), data = df) +
-  geom_point() 
+  geom_point(position = 'jitter', alpha = 0.25) 
 
 ggplot(aes(x = pH, y = citric.acid), data = df) +
-  geom_point() 
+  geom_point(position = 'jitter', alpha = 0.25) 
 ```
 
 Among all three acids: fixed acidity(tartaric acid), volatile acidity(acetic acid) and citric acid, tartaric acid has strongest effect on pH.
@@ -231,7 +294,7 @@ Chlorides, residual sugar and pH may be weak predict factors for quality.
 
 ### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 
-Density has strong positive corelation with residual sugar. The effect of density on quality may be confounded by alcohol or residual sugar.
+Density has strong corelation with alcohol and residual sugar. The effect of density on quality may be confounded by alcohol or residual sugar.
 Among all three acids: fixed acidity(tartaric acid), volatile acidity(acetic acid) and citric acid, tartaric acid has strongest effect on pH.
 
 ### What was the strongest relationship you found?
