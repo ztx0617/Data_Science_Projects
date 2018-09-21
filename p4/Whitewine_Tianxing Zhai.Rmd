@@ -72,6 +72,7 @@ ggplot(aes(x = alcohol), data = df) +
   geom_histogram()
 ```
 
+The distributions of all chemical variables, except alcohol, are bell-shape with positive skew. So it it better to analyse their medians rather than means. 
 
 ### What is the structure of your dataset?
 
@@ -271,7 +272,7 @@ I also notice that density mianly depends on the alcohol and sugar content. More
 ```{r echo = FALSE}
 ggplot(aes(x = pH, y = fixed.acidity, color = quality), data = df) +
   geom_point() +
-  scale_color_brewer(type = 'qual') +
+  scale_color_brewer(type = 'seq') +
   ylim(4,10)
 ```
 
