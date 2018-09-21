@@ -1,5 +1,9 @@
 White Wine Exploration by Tianxing Zhai
 ========================================================
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
+Sys.setenv(LANG = "en")
+```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
 # Load all of the packages that you end up using
@@ -17,7 +21,6 @@ library(tidyr)
 library(memisc)
 library(Hmisc)
 library(gridExtra)
-Sys.setenv(LANG = "en")
 ```
 
 ```{r echo=FALSE, Load_the_Data}
@@ -28,42 +31,81 @@ df$quality = ordered(df$quality, levels = c(3,4,5,6,7,8,9))
 
 
 # Univariate Analysis
-
-### What is the structure of your dataset?
-```{r echo=FALSE}
+```{r}
 str(df)
 summary(df)
+names(df)
+ggplot(aes(x = quality), data = df) +
+  geom_bar()
+
+ggplot(aes(x = fixed.acidity), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = volatile.acidity), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = citric.acid), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = residual.sugar), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = chlorides), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = free.sulfur.dioxide), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = total.sulfur.dioxide), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = density), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = pH), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = sulphates), data = df) +
+  geom_histogram()
+
+ggplot(aes(x = alcohol), data = df) +
+  geom_histogram()
 ```
+
+
+### What is the structure of your dataset?
+
 There are 4898 observations (whitewines) in the dataset with 13 variables as listed above. 
 The 'x' variable is id of whitewines. The 'quality' variable is the quality of whitewines, which scores between 0 (worst) and 10 (best). All other variables are continuous variables which stand for chemical concentration or chemical features of whitewines (I will call these variables 'chemical variables').
 
 ### What is/are the main feature(s) of interest in your dataset?
-```{r echo=FALSE}
-ggplot(aes(x = quality), data = df) +
-  geom_bar()
-```
 
 The main feature in the data set is quality. All other variables (except 'x', the id) are measured for finding relation with quality. As we can see, most whitewines score 6 and fewest whitewines have scores of 3-4 (worst) and 8-9 (best).
 
 ### What other features in the dataset do you think will help support your investigation into your feature(s) of interest?
+
 All chemical variables are potential predict factors of quality. I will put most efforts on Bivariate Analysis.
 
 
 # Bivariate Plots Section
-```{r echo=FALSE, Bivariate_Plots}
-df$quality = ordered(df$quality, levels = c(3,4,5,6,7,8,9))
-ggpairs(df[2:13], 
-        lower = list(continuous = wrap("points", shape = I('.'))), 
-        upper = list(combo = wrap("box", outlier.shape = I('.'))))
+```{r echo=FALSE, fig.width = 15, fig.height = 15}
+ggpairs(df[!(names(df) %in% c('X'))], 
+        lower = list(continuous = wrap("points", shape = I('.')),
+                     combo = wrap("box", outlier.shape = I('.')),
+                     discrete = "facetbar"
+                     ))
 ```
 
 Above is the pair plots of all variables except X. It is hard to find correlation in the plot. We need to run correlation tests and find which variables have corelation with quality:
 
 ```{r echo = FALSE}
-cor_table = rcorr(as.matrix(df[2:13]),type="pearson")
+
+cor_table = rcorr(as.matrix(df[!(names(df) %in% c('X'))]),type="pearson")
 cor_r = as.data.frame(cor_table[['r']])
+cor_r = subset(cor_r, (rownames(cor_r) %in% 'quality'))[!(names(cor_r) %in% c('quality'))]
 cor_p = as.data.frame(cor_table[['P']])
-cor_rp_table = rbind(cor_r[12,1:11], cor_p[12,1:11])
+cor_p = subset(cor_p, (rownames(cor_p) %in% 'quality'))[!(names(cor_p) %in% c('quality'))]
+cor_rp_table = rbind(cor_r, cor_p)
 cor_rp_table = rownames_to_column(cor_rp_table, var = 'type')
 cor_rp_table$type = c('R', 'P')
 cor_rp_table = gather(cor_rp_table, -'type', key = 'chemicals', value = 'values')
@@ -153,14 +195,6 @@ Density may be strong predict factors.
 Chlorides and residual sugar may be weak predict factors. 
 Fixed acidity, total sulfur dioxide and volatile acidity may not be predict factors.
 
-# Bivariate Analysis
-
-### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
-The alcohol content and density may be strong predict factors for quality. Whitewines with higher alcohol content and lower density may have better quality.
-Chlorides, residual sugar and pH may be weak predict factors for quality.
-
-
-### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 ```{r echo = FALSE}
 ggplot(aes(x = density, y = alcohol), data = df) +
   geom_point() +
@@ -186,8 +220,21 @@ ggplot(aes(x = pH, y = citric.acid), data = df) +
 ```
 
 Among all three acids: fixed acidity(tartaric acid), volatile acidity(acetic acid) and citric acid, tartaric acid has strongest effect on pH.
+# Bivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
+
+The alcohol content and density may be strong predict factors for quality. Whitewines with higher alcohol content and lower density may have better quality.
+Chlorides, residual sugar and pH may be weak predict factors for quality.
+
+
+### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
+
+Density has strong positive corelation with residual sugar. The effect of density on quality may be confounded by alcohol or residual sugar.
+Among all three acids: fixed acidity(tartaric acid), volatile acidity(acetic acid) and citric acid, tartaric acid has strongest effect on pH.
 
 ### What was the strongest relationship you found?
+
 The relationship between density and residual sugar/ alcohol.
 
 
@@ -197,19 +244,19 @@ The relationship between density and residual sugar/ alcohol.
 ```{r echo=FALSE, Multivariate_Plots}
 ggplot(aes(x = density, y = alcohol, color = quality), data = df) +
   geom_point() +
-  scale_color_brewer(type = 'qual') +
+  scale_color_brewer(type = 'seq') +
   xlim(quantile(df$density, 0.01), quantile(df$density, 0.99)) 
 
 
 ggplot(aes(x = density, y = residual.sugar, color = quality), data = df) +
   geom_point() +
-  scale_color_brewer(type = 'qual') +
+  scale_color_brewer(type = 'seq') +
   xlim(quantile(df$density, 0.01), quantile(df$density, 0.99))+
   ylim(0,25)
 
 ggplot(aes(x = alcohol, y = residual.sugar, color = quality), data = df) +
   geom_point() +
-  scale_color_brewer(type = 'qual') +
+  scale_color_brewer(type = 'seq') +
   ylim(0,25) +
   geom_hline(aes(yintercept = 5), color = 'red') +
   geom_vline(aes(xintercept = 11), color = 'blue') +
@@ -230,6 +277,15 @@ ggplot(aes(x = pH, y = fixed.acidity, color = quality), data = df) +
 
 The pattern here is much more unconspicuous. But we can still recognize that dark dots tend to center in the right. Besides, we can notice that fixed acid do not have effect on the quality, because the dark dots center in the right, not the right top or bottom corners.
 
+```{r echo = FALSE}
+df_quality.as.numeric = transform(df, quality = as.numeric(quality))
+m1 <- lm(quality ~ alcohol, data = df_quality.as.numeric)
+m2 <- update(m1, ~ . + density)
+m3 <- update(m2, ~ . + pH)
+m4 <- update(m3, ~ . + chlorides)
+m5 <- update(m4, ~ . + residual.sugar)
+mtable(m1, m2, m3, m4, m5)
+```
 
 # Multivariate Analysis
 
@@ -240,15 +296,7 @@ The quality of whitewines is mainly affected by alchol, sugar content and densit
 ### OPTIONAL: Did you create any models with your dataset? Discuss the strengths and limitations of your model.
 Yes. I make a simple linear regression model to predict qulity. But strictly speaking, 'quality' is not a continous variable. So it is not so good to use linear regression model. The R-square is 0.220, too low for a eligible linear regression model.
 
-```{r echo = FALSE}
-df_quality.as.numeric = transform(df, quality = as.numeric(quality))
-m1 <- lm(quality ~ alcohol, data = df_quality.as.numeric)
-m2 <- update(m1, ~ . + density)
-m3 <- update(m2, ~ . + pH)
-m4 <- update(m3, ~ . + chlorides)
-m5 <- update(m4, ~ . + residual.sugar)
-mtable(m1, m2, m3, m4, m5)
-```
+
 
 ------
 
@@ -289,7 +337,7 @@ Among all 11 chemical variables, alcohol and density are the strongest influence
 ```{r echo=FALSE, Plot_Three}
 ggplot(aes(x = alcohol, y = density, color = quality), data = df) +
   geom_point() +
-  scale_color_brewer(type = 'qual') +
+  scale_color_brewer(type = 'seq') +
   ylim(quantile(df$density, 0.01), quantile(df$density, 0.99)) +
   ggtitle('Density by alcohol content and quality') +
   xlab('alcohol(% by volume)') +
