@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="http://d3js.org/d3.v4.min.js"></script>
+	<script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+  <style>
+
+  body {
+      margin: 60px;
+    }
+
+  h1 {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 40px;
+  }
+
+  h2 {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 30px;
+  }
+
+  p {
+    width: 1000px;
+    font-size: 20px;
+  }
+</style>
+</head>
+
+<body>
+  <h1>Mortality Rates on the Titanic</h1>
+
+  <p>RMS Titanic was a British passenger liner that sank in the North Atlantic Ocean in the early hours of 15 April 1912,
+    after colliding with an iceberg during her maiden voyage from Southampton to New York City.
+    There were an estimated 2,224 passengers and crew aboard,
+    and more than 1,500 died, making it one of the deadliest commercial peacetime maritime disasters in modern history.</p>
+  <p>In previous study, I found ticket classes, gender, age and port of embarkation are factors that affected death rates of Titanic passengers.
+    Here I will show how they affected death rates.</p>
+
+  <h2>Ticket classes and Mortality Rates</h2>
+  <!--Build charts of Mortality Rates-Ticket Classes-->
+  <div id="chartContainer">
+  <script type="text/javascript">
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+      var myChart = new dimple.chart(svg, data);
+      myChart.setBounds(65, 45, 505, 315)
+      var x = myChart.addCategoryAxis("x", "Pclass");
+          x.addOrderRule(["1st class", "2nd class", "3rd class"]);
+          x.title="Ticket Classes";
+      var y = myChart.addPctAxis("y", "count");
+          y.title="Mortality Rates";
+      var series = myChart.addSeries("Survived", dimple.plot.bar);
+      myChart.addLegend(200, 10, 380, 20, "right");
+      myChart.draw();
+    });
+  </script>
+  </div>
+  <p>As we can see, People in 1st class had the lowest mortality rate (about 35%).
+  The mortality rate of people in 2nd class was higher (about 52%).
+  Finally, about 76% of people in 3rd class died of that shipwreck.
+  </p>
+
+  <h2>Gender and Mortality Rates</h2>
+  <!--Build charts of Mortality Rates-Gender-->
+  <div id="chartContainer2">
+  <script type="text/javascript">
+    var svg2 = dimple.newSvg("#chartContainer2", 590, 400);
+    d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+      var myChart2 = new dimple.chart(svg2, data);
+      myChart2.setBounds(65, 45, 505, 315)
+      var x2 = myChart2.addCategoryAxis("x", "Sex");
+          x2.title="Gender";
+      var y2 = myChart2.addPctAxis("y", "count");
+          y2.title="Mortality Rates";
+      var series2 = myChart2.addSeries("Survived", dimple.plot.bar);
+      myChart2.addLegend(200, 10, 380, 20, "right");
+      myChart2.draw();
+    });
+  </script>
+  </div>
+  <p>Males have higher mortality rate (79%), while females' mortality rate is much lower, which is only 25%.</p>
+
+	<h2>Age and Mortality Rates</h2>
+	<!--Build charts of Mortality Rates-Age-->
+	<div id="chartContainer3">
+	<script type="text/javascript">
+		var svg3 = dimple.newSvg("#chartContainer3", 590, 400);
+		d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+			var myChart3 = new dimple.chart(svg3, data);
+			myChart3.setBounds(65, 45, 505, 315)
+			var x3 = myChart3.addCategoryAxis("x", "Age_cat");
+			  	x3.addOrderRule(["Children", "Adults", "Seniors"]);
+					x3.title="Age";
+			var y3 = myChart3.addPctAxis("y", "count");
+					y3.title="Mortality Rates";
+			var series3 = myChart3.addSeries("Survived", dimple.plot.bar);
+			myChart3.addLegend(200, 10, 380, 20, "right");
+			myChart3.draw();
+		});
+	</script>
+	</div>
+	<p>The mortality rate (50%) of children (age < 18) is  lower than that (61%) of adults (age 18~50) and that of (67%) of seniors.</p>
+
+	<h2>Port of Embarkation and Mortality Rates</h2>
+	<!--Build charts of Mortality Rates-Port of Embarkation-->
+	<div id="chartContainer4">
+	<script type="text/javascript">
+		var svg4 = dimple.newSvg("#chartContainer4", 590, 400);
+		d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+			var myChart4 = new dimple.chart(svg4, data);
+			myChart4.setBounds(65, 45, 505, 315)
+			var x4 = myChart4.addCategoryAxis("x", "Embarked");
+					x4.title="Port of Embarkation";
+			var y4 = myChart4.addPctAxis("y", "count");
+					y4.title="Mortality Rates";
+			var series4 = myChart4.addSeries("Survived", dimple.plot.bar);
+			myChart4.addLegend(200, 10, 380, 20, "right");
+			myChart4.draw();
+		});
+	</script>
+	</div>
+	<p>The result shows that people who embarked in Cherbourg have the lowest mortality rate (39%),
+		while people who embarked in Queenstown have highest mortality rate (71%).</p>
+</body>
+
+</html>
