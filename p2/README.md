@@ -10,6 +10,7 @@ of passengers on Titanic. I had used **Pandas, Numpy, Scipy and Matplotlib** lib
 
 	The investigation report written with jupyter notebook. 
 	It has narratives, plots and related Python codes.
+	You can browse it directly online by clicking on it.
 * **titanic-data.csv**
 
 	The original Titanic survival dataset.
