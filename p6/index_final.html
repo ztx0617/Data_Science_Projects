@@ -43,7 +43,7 @@
   <div id="chartContainer">
   <script type="text/javascript">
     var svg = dimple.newSvg("#chartContainer", 590, 400);
-    d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+    d3.csv("data/titanic_data_cleaned.csv", function (data) {
       var myChart = new dimple.chart(svg, data);
       myChart.setBounds(65, 45, 505, 315)
       var x = myChart.addCategoryAxis("x", "Pclass");
@@ -67,7 +67,7 @@
   <div id="chartContainer2">
   <script type="text/javascript">
     var svg2 = dimple.newSvg("#chartContainer2", 590, 400);
-    d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+    d3.csv("data/titanic_data_cleaned.csv", function (data) {
       var myChart2 = new dimple.chart(svg2, data);
       myChart2.setBounds(65, 45, 505, 315)
       var x2 = myChart2.addCategoryAxis("x", "Sex");
@@ -87,7 +87,7 @@
 	<div id="chartContainer3">
 	<script type="text/javascript">
 		var svg3 = dimple.newSvg("#chartContainer3", 590, 400);
-		d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+		d3.csv("data/titanic_data_cleaned.csv", function (data) {
 			var myChart3 = new dimple.chart(svg3, data);
 			myChart3.setBounds(65, 45, 505, 315)
 			var x3 = myChart3.addCategoryAxis("x", "Age_cat");
@@ -108,7 +108,7 @@
 	<div id="chartContainer4">
 	<script type="text/javascript">
 		var svg4 = dimple.newSvg("#chartContainer4", 590, 400);
-		d3.csv("/data/titanic_data_cleaned.csv", function (data) {
+		d3.csv("data/titanic_data_cleaned.csv", function (data) {
 			var myChart4 = new dimple.chart(svg4, data);
 			myChart4.setBounds(65, 45, 505, 315)
 			var x4 = myChart4.addCategoryAxis("x", "Embarked");
