@@ -11,11 +11,23 @@ age and port of embarkation' and 'death rates of Titanic passengers'.
 ## Contents
 * **index_final.html**
 
-	The html version of data visualization. **You need to download it and open it
+	The html version of data visualization. 
+	**You need to download the whole P6 folder and open index_final.html
 	in your localhost to see the interactive visualization**.
 
 * **index_final.pdf**
 	
 	The pdf version of data visualization.
 	You can browse it directly online by clicking on it.
-	But the interaction can't be showed via pdf.
+	**But the interaction can't be showed via pdf.**
+	
+* **data**
+	* cleaning.py
+		
+		The Python code used to clean and transform the original dataset.
+	* titanic_data.csv
+		
+		The original dataset.
+	* titanic_data.csv
+		
+		The cleaned dataset.	
