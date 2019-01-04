@@ -28,6 +28,6 @@ age and port of embarkation' and 'death rates of Titanic passengers'.
 	* titanic_data.csv
 		
 		The original dataset.
-	* titanic_data.csv
+	* titanic_data_cleaned.csv
 		
 		The cleaned dataset.	
