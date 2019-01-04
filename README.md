@@ -1,4 +1,4 @@
-# Tianxing Zhai's Data Analyst Nano Degree Projects
+# Tianxing Zhai's Data Analysis Projects
 Welcome to my projects presentation space! Below are overviews of all my projects:
 ## P2: Investigate a Dataset
 I used Python to explore the 
