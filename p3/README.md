@@ -9,6 +9,9 @@ separately. Secondly, I loaded the csv files to Pandas dataframes and cleaned th
 Thirdly, I uesed sqlite3-Python API to create a empty **relational database** which had five tables
 with **appropriate primary keys and foreign keys**. Then I exported the data to the database. 
 Finally, I ran some **SQL queries** to explore the database.
+
+[Open the report](https://github.com/ztx0617/Udacity_projects/blob/master/p3/Project_Tianxing%20Zhai.ipynb)
+
 ## Contents
 * **Project_Tianxing Zhai.ipynb**
 

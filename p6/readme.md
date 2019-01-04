@@ -1,22 +1,21 @@
-# Summary
-Here I analyzed how ticket classes, gender, age and port of embarkation affected death rates of Titanic passengers. I found passengers who were males, aduclts, embarked from Queenstown and stayed in 3rd classes were more likely to die of that shipwreck.
+# Interactive Data Visualization on Website
+## Overview
+Here I used **D3.js and Dimple.js** to visualize my discovery of P1 **on website.** 
+I created 4 precnt bars to show the association between 'ticket classes, gender, 
+age and port of embarkation' and 'death rates of Titanic passengers'. 
+**All the plots were interactive**. You can put your cursor on the plot to see exact counts.
 
-# Design
-Firstly, I cleaned the raw data using Python and Pandas: I removed missing values, transformed the age to categorical variable and only kept 5 variables in the final data set. Then I chose vertical precnt bar in dimple.js to do data visualization, because I need to focus on the comparison of **mortality rates** and **survival rates** of different groups. To let dimple.js create plots on frequency percentage, I created a dummy variable 'count' in the final data set and let it equal to 1. Finally, I created 4 precnt bars to show the association between 'ticket classes, gender, age and port of embarkation' and 'death rates of Titanic passengers'.
+[Open the report (PDF)](https://github.com/ztx0617/Udacity_projects/blob/master/p6/index_final.pdf)
 
-# Feedbacks
-1. Feedback from Ming Li
 
-	He suggested me to control the margin of words, because he thought that my composing was so ugly. I did so and also tuned the font size and type of words to make my web more beautiful (index1.html to index2.html).
-2. Feedback from James
+## Contents
+* **index_final.html**
 
-	He thought that the imformation provied was not enough. So I added the association between port of embarkation and mortality rates to make content richer (index2.html to index_final.html).
-3. Feedback from Sherri
+	The html version of data visualization. **You need to download it and open it
+	in your localhost to see the interactive visualization**.
 
-	She praised my visualization. She said that she will never buy 3rd class cruise tickets because she saw the mortality rate of 3rd class passengers in Titanic was so high! (Just joking)
-
-# Resources
-* [RMS Titanic - Wikipedia](https://en.wikipedia.org/wiki/RMS_Titanic)
-* [Data Visualization Titanic](http://bl.ocks.org/ishashankverma/62ae65230f506f2d18c7606c6b00ca59)
-* [Vertical 100% Bar, Dimple.js](http://dimplejs.org/examples_viewer.html?id=bars_vertical_stacked_100pct)
-* [Pandas Documents](http://pandas.pydata.org/pandas-docs/stable/index.html)
+* **index_final.pdf**
+	
+	The pdf version of data visualization.
+	You can browse it directly online by clicking on it.
+	But the interaction can't be showed via pdf.

@@ -5,6 +5,8 @@ Titanic passengers survival data set. I found that ticket class, gender, age, co
 port of embarkation were significantly associated with survival rates 
 of passengers on Titanic. I had used **Pandas, Numpy, Scipy and Matplotlib** libraries to 
 **transform, analyze, visualize the data and do statistical tests**.
+
+[Open the report](https://github.com/ztx0617/Udacity_projects/blob/master/p2/Titanic_Tianxing%20Zhai_revised.ipynb)
 ## Contents
 * **Titanic_Tianxing Zhai_revised.ipynb**
 

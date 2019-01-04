@@ -13,6 +13,8 @@ I selected **Decision Tree** as the final algorithm for my classifier.
 After **1000-fold cross validation**, my classifier yielded results with **84.83% accuracy,
 41.20% precision and 32.22% recall rate**.
 
+[Open the report](https://github.com/ztx0617/Udacity_projects/blob/master/p5/Enron%20Machine%20Learing%20Project_Tianxing%20Zhai.ipynb)
+
 ## Contents
 * **Enron Machine Learing Project_Tianxing Zhai.ipynb**
 
