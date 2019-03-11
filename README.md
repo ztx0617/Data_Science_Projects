@@ -9,7 +9,7 @@ of passengers on Titanic. I had used **Pandas, Numpy, Scipy and Matplotlib** lib
 
 
 [Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p2)
-## P3: Wrangle OpenStreetMap Data
+## P3: Mine and Wrangle OpenStreetMap Data
 Here I wrangled the Washington city map data and exported it to a relational database.
 
 
