@@ -2,6 +2,7 @@
 Welcome to my projects presentation space! Below are overviews of all my projects:
 ## Machine learning projects
 ### Deep learning: Flower Image Classifier
+
 ### Unsupervised learning: Identify Customer Segments
 
 ## Other data analysis projects
