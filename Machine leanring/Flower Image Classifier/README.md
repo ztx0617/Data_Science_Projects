@@ -1,4 +1,4 @@
-# Wrangle OpenStreetMap Data
+# Deep learning: Flower Image Classifier
 ## Overview
 ![overview](https://github.com/ztx0617/Data_Science_Projects/blob/master/pictures/deep_learning_overview.png)
 
