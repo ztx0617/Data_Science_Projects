@@ -3,7 +3,7 @@
 ![overview](https://github.com/ztx0617/Data_Science_Projects/blob/master/pictures/deep_learning_overview.png)
 
 - Used **Pytorch** and the **DenseNet-121** pre-trained model to build a flower image classifier:
-	- Load and pre-proccess the data: For training data, do random scaling, cropping, and flipping and then do normalization of RGB channels. For testing data, do resizing and normalization only.
+	- Loaded and pre-processed the data: For training data, did random scaling, cropping, and flipping and then did normalization of RGB channels. For testing data, did resizing and normalization only.
 	- Used the DenseNet-121 pre-trained model and defined my own classifier to build the model framework.
 	- Trained and tested the performance of the model.
 	- Saved the model to checkpoint.pth.
