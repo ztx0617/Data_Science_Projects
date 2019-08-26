@@ -8,6 +8,7 @@ Welcome to my projects presentation space! Below are overviews of all my project
 
 - Developed two Python command line APIs for training models and making predictions.
 
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Flower%20Image%20Classifier)
 ### Unsupervised learning: Identify Customer Segments
 
 ## Other data analysis projects
