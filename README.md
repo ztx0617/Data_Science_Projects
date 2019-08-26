@@ -3,10 +3,24 @@ Welcome to my projects presentation space! Below are overviews of all my project
 ## Machine learning projects
 ### Deep learning: Flower Image Classifier
 ![overview](https://github.com/ztx0617/Data_Science_Projects/blob/master/pictures/deep_learning_overview.png)
+
+- Used **Pytorch** and the **DenseNet-121** pre-trained model to build a flower image classifier. The classifier can identify **102 types** of flowers with **87.6% accuracy** (on test datasets). 
+
+- Developed two Python command line APIs for training models and making predictions.
+
 ### Unsupervised learning: Identify Customer Segments
 
 ## Other data analysis projects
-### Investigate a Dataset
+### Mine and Wrangle OpenStreetMap Data
+Here I mined and wrangled the Washington city map data and exported it to a relational database.
+
+1. **Extracted the map data from XML files** and transformed them into five separate csv files. The five csv files stored nodes, node-tags, ways, way-tags and ways-nodes connection data separately. 
+2. Loaded the csv files to Pandas dataframes and cleaned them. 
+3. Uesed sqlite3-Python API to create a empty **relational database** which had five tables with **appropriate primary keys and foreign keys**. Then exported the data to the database. 
+4. Ran some **SQL queries** to explore the database.
+
+[Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p3)
+### Exploratory Data Analysis using Python
 I used Python to explore the 
 Titanic passengers survival data set. I found that ticket class, gender, age, companionship and 
 port of embarkation were significantly associated with survival rates 
@@ -15,18 +29,7 @@ of passengers on Titanic. I had used **Pandas, Numpy, Scipy and Matplotlib** lib
 
 
 [Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p2)
-### Mine and Wrangle OpenStreetMap Data
-Here I mined and wrangled the Washington city map data and exported it to a relational database.
 
-
-Firstly, I **extracted the map data from XML files** and transformed them into five separate csv files. 
-The five csv files stored nodes, node-tags, ways, way-tags and ways-nodes connection data 
-separately. Secondly, I loaded the csv files to Pandas dataframes and cleaned them. 
-Thirdly, I uesed sqlite3-Python API to create a empty **relational database** which had five tables
-with **appropriate primary keys and foreign keys**. Then I exported the data to the database. 
-Finally, I ran some **SQL queries** to explore the database.
-
-[Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p3)
 
 ### Exploratory Data Analysis using R
 I used R to explore the white wine quality data set. I found that 
