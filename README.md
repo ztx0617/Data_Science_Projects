@@ -10,6 +10,16 @@ Welcome to my projects presentation space! Below are overviews of all my project
 
 [Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Flower%20Image%20Classifier)
 ### Unsupervised learning: Identify Customer Segments
+![overview](https://github.com/ztx0617/Data_Science_Projects/blob/master/pictures/segments_results.png)
+
+
+
+- Used the **k-means** algorithm to cluster the Germany general population demographics data into 13 segments. 
+- Applied the same clustering model to the demographics data of customers of a mail-order company. 
+- Compared the difference of segments distribution between general population and customers.
+- Found that customers of the mail-order company tended to be be richest, middle-aged males with these personalities: combative, dominant and critical minded.
+
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Identify%20Customer%20Segments)
 
 ## Other data analysis projects
 ### Mine and Wrangle OpenStreetMap Data
@@ -20,7 +30,7 @@ Here I mined and wrangled the Washington city map data and exported it to a rela
 3. Uesed sqlite3-Python API to create a empty **relational database** which had five tables with **appropriate primary keys and foreign keys**. Then exported the data to the database. 
 4. Ran some **SQL queries** to explore the database.
 
-[Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p3)
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Other%20data%20analysis%20projects/Mine%20and%20Wrangle%20OpenStreetMap%20Data)
 ### Exploratory Data Analysis using Python
 I used Python to explore the 
 Titanic passengers survival data set. I found that ticket class, gender, age, companionship and 
@@ -29,7 +39,7 @@ of passengers on Titanic. I had used **Pandas, Numpy, Scipy and Matplotlib** lib
 **transform, analyze, visualize the data and do statistical tests**.
 
 
-[Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p2)
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Other%20data%20analysis%20projects/Investigate%20a%20Dataset)
 
 
 ### Exploratory Data Analysis using R
@@ -39,5 +49,5 @@ among all 11 chemical parameters, alcohol and density were strongest influence f
  I had used **dplyr, tidyr, ggplot2, GGally and other four R libraries** to 
 **transform, analyze, visualize the data, do statistical tests and build regression models.**
 
-[Project link](https://github.com/ztx0617/Udacity_projects/tree/master/p4)
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Other%20data%20analysis%20projects/Exploratory%20Data%20Analysis%20using%20R)
 
