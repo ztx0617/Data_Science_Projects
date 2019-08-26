@@ -6,7 +6,7 @@ among all 11 chemical parameters, alcohol and density were strongest influence f
  I had used **dplyr, tidyr, ggplot2, GGally and other four R libraries** to 
 **transform, analyze, visualize the data, do statistical tests and build regression models.**
 
-[Open the report (PDF)](https://github.com/ztx0617/Udacity_projects/blob/master/p4/Whitewine_Tianxing_Zhai.pdf)
+[Open the report (PDF)](https://github.com/ztx0617/Data_Science_Projects/blob/master/Other%20data%20analysis%20projects/Exploratory%20Data%20Analysis%20using%20R/Whitewine_Tianxing_Zhai.pdf)
 ## Contents
 * **Whitewine_Tianxing Zhai.Rmd**
 

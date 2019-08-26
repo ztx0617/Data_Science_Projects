@@ -1,5 +1,5 @@
 # Tianxing Zhai's Data Science Projects
-Welcome to my projects presentation space! Below are overviews of all my projects:
+Welcome to my projects presentation space! Below are overviews of all my finished projects:
 ## Machine learning projects
 ### Deep learning: Flower Image Classifier
 ![overview](https://github.com/ztx0617/Data_Science_Projects/blob/master/pictures/deep_learning_overview.png)
