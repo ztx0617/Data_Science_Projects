@@ -27,7 +27,7 @@ Here I mined and wrangled the Washington city map data and exported it to a rela
 
 1. **Extracted the map data from XML files** and transformed them into five separate csv files. The five csv files stored nodes, node-tags, ways, way-tags and ways-nodes connection data separately. 
 2. Loaded the csv files to Pandas dataframes and cleaned them. 
-3. Uesed sqlite3-Python API to create a empty **relational database** which had five tables with **appropriate primary keys and foreign keys**. Then exported the data to the database. 
+3. Used sqlite3-Python API to create a empty **relational database** which had five tables with **appropriate primary keys and foreign keys**. Then exported the data to the database. 
 4. Ran some **SQL queries** to explore the database.
 
 [Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Other%20data%20analysis%20projects/Mine%20and%20Wrangle%20OpenStreetMap%20Data)
