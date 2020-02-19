@@ -51,3 +51,14 @@ among all 11 chemical parameters, alcohol and density were strongest influence f
 
 [Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Other%20data%20analysis%20projects/Exploratory%20Data%20Analysis%20using%20R)
 
+
+
+### What makes a popular mobile game?
+The mobile games industry is developing so fast, with companies spending vast amounts of money on the development and marketing of these games to an equally large market. According to the [newzoo](https://newzoo.com/insights/articles/the-global-games-market-will-generate-152-1-billion-in-2019-as-the-u-s-overtakes-china-as-the-biggest-market/), mobile gaming (smartphone and tablet) is largest segment of gaming market in 2019, which is 68.5 billion dollars (45% of the global games market). Of this, 54.9 billion dollars will come from smartphone games.
+
+The data used here includes 17007 strategy games on the Apple App Store. It was collected on the 3rd of August 2019, using the iTunes API and the App Store sitemap, by the kaggle user Tristan. I downloaded it from the [kaggle datasets](https://www.kaggle.com/tristan581/17k-apple-app-store-strategy-games).
+
+Using this data set, I find what makes a popular strategy game.Firstly, I defined a parameter of popularity: User Rating Count per Day. Then I studied the association between popularity and charging mode, rating, size. I found that games with the free download and IAP (In-app purchase) charging mode, highly rated and larger size are more likely to be popular.
+
+
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Other%20data%20analysis%20projects/What%20makes%20a%20popular%20mobile%20game)
