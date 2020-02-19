@@ -6,6 +6,8 @@ The data used here includes 17007 strategy games on the Apple App Store. It was 
 
 Using this data set, I find what makes a popular strategy game.
 
+[Link to my blog post](https://blog.csdn.net/Star_Zhai/article/details/104395871)
+
 ## Results
 I analyzed the Apple App Store Strategy Games data. Firstly, I defined a parameter of popularity: User Rating Count per Day. Then I studied the association between popularity and charging mode, rating, size. I found that games with the free download and IAP (In-app purchase) charging mode, highly rated and larger size are more likely to be popular.
 
