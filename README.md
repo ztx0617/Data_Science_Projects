@@ -21,6 +21,18 @@ Welcome to my projects presentation space! Below are overviews of all my finishe
 
 [Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Identify%20Customer%20Segments)
 
+### NLP: Identify message for help in disasters
+
+In this project, I built ETL and machine learning pipelines to classify messages for help in disasters. I also built a website for data visualization and a web App to identify messages from users' input.
+
+The datasets used for training were provided by [Figure Eight](https://www.figure-eight.com), whcih contained real messages sent during disasters and their respective labels. 
+
+The project will help aid agencies identify what disaster victims need.
+
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Identify%20message%20for%20help%20in%20disasters)
+
+
+
 ## Other data analysis projects
 ### Mine and Wrangle OpenStreetMap Data
 Here I mined and wrangled the Washington city map data and exported it to a relational database.
