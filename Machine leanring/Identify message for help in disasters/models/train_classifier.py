@@ -1,3 +1,19 @@
+import pip
+
+def install(package):
+    if hasattr(pip, 'main'):
+        pip.main(['install', package])
+    else:
+        pip._internal.main(['install', package])
+        
+def upgrade(package):
+    pip.main(['install', '--upgrade', package])
+    
+install('xgboost')
+upgrade('scikit-learn')
+upgrade('cloudpickle')
+
+
 import sys
 import pandas as pd
 from sqlalchemy import create_engine
