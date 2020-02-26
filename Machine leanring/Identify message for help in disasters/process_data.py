@@ -18,11 +18,11 @@ def load_clean_data(messages_filepath, categories_filepath):
     category_colnames = categories_expand.loc[0,:].apply(lambda x: x.split('-')[0]).tolist()
     categories_expand = categories_expand.applymap(lambda x: x.split('-')[1]).astype('int')
     categories_expand.columns = category_colnames
-    categories_expand = categories_expand[categories_expand <= 1].dropna(how = 'any', axis = 0)
-    categories = pd.concat([categories['id'], categories_expand], axis = 1)
+    categories_expand = categories_expand[categories_expand <= 1]
+    categories = pd.concat([categories['id'], categories_expand], axis = 1).dropna(how = 'any', axis = 0)
     
     #merge messages and categories based on id
-    df = pd.merge(messages, categories, on = 'id', how = 'right')
+    df = pd.merge(messages, categories, on = 'id')
     
     return df
     
