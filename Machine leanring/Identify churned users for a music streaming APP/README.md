@@ -1,4 +1,4 @@
-# What makes a popular mobile game?
+# Identify churned users for a music streaming APP
 ## Overview
 The problem comes from a fictitious music streaming company called Sparkify. Sparkify has millions of users who use the company's app to stream thier favorite songs everyday. Each user uses either the Free-tier with advertisement between the songs or the premium subscription plan. Users can upgrade, downgrade or cancel thier service at any time. Hence, it is important to predict users who are going to cancel subscriptions (churned users). Knowing who will be churned users, we can take actions to keep paid users before it is too late.
 

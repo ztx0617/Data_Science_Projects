@@ -31,6 +31,15 @@ The project will help aid agencies identify what disaster victims need.
 
 [Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Identify%20message%20for%20help%20in%20disasters)
 
+### Spark: Identify churned users for a music streaming APP
+
+The problem comes from a fictitious music streaming company called Sparkify. Sparkify has millions of users who use the company's app to stream thier favorite songs everyday. Each user uses either the Free-tier with advertisement between the songs or the premium subscription plan. Users can upgrade, downgrade or cancel thier service at any time. Hence, it is important to predict users who are going to cancel subscriptions (churned users). Knowing who will be churned users, we can take actions to keep paid users before it is too late.
+
+In this project, I will use Spark and Python to analyze the Sparkify user event data. I will also build a machine learning model to predict who are going to cancel. Because the original data is too big (12GB), a tiny subset (128MB) was extracted and will be used in this project. All the analysis and model building will be done on my PC.
+
+
+[Project link](https://github.com/ztx0617/Data_Science_Projects/tree/master/Machine%20leanring/Identify%20churned%20users%20for%20a%20music%20streaming%20APP)
+
 
 
 ## Other data analysis projects
